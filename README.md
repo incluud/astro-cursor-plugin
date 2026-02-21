@@ -1,34 +1,93 @@
-# Cursor plugin template
+# Astro Plugin for Cursor
 
-Build and publish Cursor Marketplace plugins from a single repo.
+A Cursor plugin that enhances your Astro development experience with documentation access, coding standards, and guided workflows.
 
-Two starter plugins are included:
+## Features
 
-- **starter-simple**: rules and skills only
-- **starter-advanced**: rules, skills, agents, commands, hooks, MCP, and scripts
+### Astro Docs MCP
 
-## Getting started
+Direct access to the official Astro documentation via the [Astro Docs MCP server](https://docs.astro.build/en/guides/build-with-ai/). Search and retrieve documentation without leaving your editor.
 
-[Use this template](https://github.com/cursor/plugin-template/generate) to create a new repository, then customize:
+### Rules
 
-1. `.cursor-plugin/marketplace.json`: set marketplace `name`, `owner`, and `metadata`.
-2. `plugins/*/.cursor-plugin/plugin.json`: set `name` (lowercase kebab-case), `displayName`, `author`, `description`, `keywords`, `license`, and `version`.
-3. Replace placeholder rules, skills, agents, commands, hooks, scripts, and logos.
+- **astro-best-practices.mdc** - Comprehensive Astro coding standards covering:
+  - Project structure conventions
+  - Component patterns and client directives
+  - Content collections usage
+  - Performance optimization
+  - Accessibility requirements
+  - Styling approaches
 
-To add more plugins, see `docs/add-a-plugin.md`.
+### Skills
 
-## Single plugin vs multi-plugin
+| Skill | Description |
+|-------|-------------|
+| **docs-lookup** | Search Astro documentation using the MCP for APIs, configuration, and best practices |
+| **create-component** | Scaffold components, pages, and layouts with templates and accessibility checklist |
+| **content-collection** | Set up content collections with type-safe Zod schemas for blogs, docs, or portfolios |
+| **add-integration** | Complete integration setup guide including post-install configuration |
+| **migrate** | Guide migration from Next.js, Nuxt, Gatsby, or upgrade between Astro versions |
 
-This template defaults to **multi-plugin** (multiple plugins in one repo).
+## Installation
 
-For a **single plugin**, move your plugin folder contents to the repository root, keep one `.cursor-plugin/plugin.json`, and remove `.cursor-plugin/marketplace.json`.
+1. Open Cursor Settings
+2. Navigate to Plugins
+3. Search for "Astro"
+4. Click Install
 
-## Submission checklist
+Or install via the command palette:
+1. Open Command Palette (`Cmd/Ctrl + Shift + P`)
+2. Type "Install Plugin"
+3. Search for "Astro"
 
-- Each plugin has a valid `.cursor-plugin/plugin.json`.
-- Plugin names are unique, lowercase, and kebab-case.
-- `.cursor-plugin/marketplace.json` entries map to real plugin folders.
-- All frontmatter metadata is present in rule, skill, agent, and command files.
-- Logos are committed and referenced with relative paths.
-- `node scripts/validate-template.mjs` passes.
-- Repository link is ready for submission to the Cursor team (Slack or `kniparko@anysphere.com`).
+## Usage
+
+### Documentation Lookup
+
+Ask questions about Astro and the plugin will search the official docs:
+
+- "How do I set up content collections?"
+- "What client directives are available?"
+- "How do I deploy to Netlify?"
+
+### Component Creation
+
+Ask the assistant to create components:
+
+- "Create a Card component with title and image props"
+- "Scaffold a blog post page with dynamic routing"
+- "Set up a base layout with SEO meta tags"
+
+### Content Collections
+
+Get help setting up structured content:
+
+- "Set up a blog with content collections"
+- "Create a schema for my portfolio projects"
+- "How do I reference authors from my blog posts?"
+
+### Integrations
+
+Get guided through complete integration setup:
+
+- "Add Tailwind CSS to my project"
+- "Set up React with the right client directives"
+- "Configure Netlify adapter for SSR"
+
+### Migration
+
+Get help migrating to Astro:
+
+- "Migrate my Next.js app to Astro"
+- "Convert this Gatsby GraphQL query to content collections"
+- "Upgrade from Astro v4 to v5"
+
+## Resources
+
+- [Astro Documentation](https://docs.astro.build/)
+- [Astro Discord](https://astro.build/chat)
+- [Astro GitHub](https://github.com/withastro/astro)
+
+## License
+
+MIT

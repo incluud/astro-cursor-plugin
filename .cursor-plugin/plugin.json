@@ -1,0 +1,13 @@
+{
+  "name": "astro",
+  "displayName": "Astro",
+  "version": "1.0.0",
+  "description": "Cursor plugin for Astro: Astro Docs MCP, coding standards, documentation lookup, and component scaffolding.",
+  "author": {
+    "name": "Incluud",
+    "email": "hello@incluud.dev"
+  },
+  "license": "MIT",
+  "keywords": ["cursor", "plugin", "astro", "mcp", "rules", "skills"],
+  "logo": "assets/logo.svg"
+}
