@@ -15,11 +15,12 @@ alwaysApply: true
 ## Project Structure
 
 ```
+src/content.config.ts  # Build-time content collection definitions
 src/
 ├── components/    # Reusable UI components (.astro, .tsx, .vue)
 ├── layouts/       # Page layouts with common structure
 ├── pages/         # File-based routes
-├── content/       # Content collections (Markdown/MDX)
+├── content/       # Content entries (Markdown/MDX)
 ├── styles/        # Global styles
 └── assets/        # Processed assets (images, fonts)
 public/            # Static assets (served as-is)
@@ -38,15 +39,17 @@ public/            # Static assets (served as-is)
 
 ## Content Collections
 
-- Define schemas with Zod for type-safe content
+- Define collections in `src/content.config.ts`
+- Use loaders and Zod schemas for type-safe content
 - Use `getCollection()` and `getEntry()` for querying
+- Use `render(entry)` instead of relying on legacy `entry.render()`
 - Leverage frontmatter for metadata
 - Prefer MDX for content requiring components
 
 ## Performance
 
 - Use `<Image />` component for automatic optimization
-- Implement view transitions for smooth navigation
+- Implement view transitions and client routing with `<ClientRouter />` when appropriate
 - Minimize layout shifts with proper image dimensions
 - Use content collections for large content sites
 

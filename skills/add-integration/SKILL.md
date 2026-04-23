@@ -52,6 +52,16 @@ export default defineConfig({
 })
 ```
 
+#### Astro 6 upgrade note
+
+If the project is upgrading Astro itself, do not upgrade integrations in isolation:
+
+1. Verify the environment is running Node 22.12.0 or newer
+2. Upgrade Astro and official integrations/adapters together
+3. Re-check the official docs before copying older config snippets into the project
+
+This catches a large class of "the integration broke" issues that are actually runtime or version skew problems.
+
 ### 3. Post-Install Configuration
 
 #### Tailwind CSS v4
@@ -196,6 +206,7 @@ export default defineConfig({
 | Styles not loading | Check CSS import path, restart dev server |
 | Hydration mismatch | Ensure server/client render same content |
 | Build fails | Check adapter matches deployment platform |
+| Build fails after Astro upgrade | Verify Node version, then upgrade official integrations/adapters alongside Astro |
 | Integration not working | Verify it's in `integrations[]` array |
 
 ## Finding Integrations

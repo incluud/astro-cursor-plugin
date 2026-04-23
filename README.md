@@ -24,7 +24,7 @@ Direct access to the official Astro documentation via the [Astro Docs MCP server
 |-------|-------------|
 | **docs-lookup** | Search Astro documentation using the MCP for APIs, configuration, and best practices |
 | **create-component** | Scaffold components, pages, and layouts with templates and accessibility checklist |
-| **content-collection** | Set up content collections with type-safe Zod schemas for blogs, docs, or portfolios |
+| **content-collection** | Set up content collections with Astro's current Content Layer API, loaders, and type-safe Zod schemas |
 | **add-integration** | Complete integration setup guide including post-install configuration |
 | **migrate** | Guide migration from Next.js, Nuxt, Gatsby, or upgrade between Astro versions |
 
@@ -80,7 +80,7 @@ Get help migrating to Astro:
 
 - "Migrate my Next.js app to Astro"
 - "Convert this Gatsby GraphQL query to content collections"
-- "Upgrade from Astro v4 to v5"
+- "Upgrade from Astro v5 to v6"
 
 ## Resources
 

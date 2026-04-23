@@ -24,8 +24,8 @@ description: Guide migration to Astro from other frameworks or between Astro ver
 | **Nuxt** | Medium | Vue components work with integration |
 | **Gatsby** | Medium | GraphQL → Content Collections |
 | **Create React App** | Medium | Add routing, convert to islands |
-| **Astro v3 → v4** | Low | Minor breaking changes |
-| **Astro v4 → v5** | Low-Medium | Content layer changes |
+| **Astro v4 → v5** | Low-Medium | Content Layer changes begin |
+| **Astro v5 → v6** | Medium | Content collections, `Astro.glob()`, and runtime changes |
 
 ### 2. Project Setup
 
@@ -52,6 +52,14 @@ Update `package.json` scripts:
   }
 }
 ```
+
+If upgrading to Astro 6, verify the runtime first:
+
+```bash
+node --version
+```
+
+Astro 6 requires Node 22.12.0 or newer. Also upgrade official integrations and adapters alongside Astro to avoid version skew.
 
 ### 3. Migration Patterns
 
@@ -115,18 +123,18 @@ export default function Post({ post }) {
 ```astro
 ---
 // Astro: src/pages/blog/[slug].astro
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog')
   return posts.map(post => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { post },
   }))
 }
 
 const { post } = Astro.props
-const { Content } = await post.render()
+const { Content } = await render(post)
 ---
 
 <article>
@@ -186,14 +194,16 @@ import MyVueComponent from '../components/MyVueComponent.vue'
 
 **Convert GraphQL to Content Collections:**
 
-```javascript
+```typescript
 // Gatsby: gatsby-node.js with GraphQL
-// → Astro: src/content/config.ts with Zod schema
+// → Astro: src/content.config.ts with a loader and schema
 
-import { defineCollection, z } from 'astro:content'
+import { defineCollection } from 'astro:content'
+import { glob } from 'astro/loaders'
+import { z } from 'astro/zod'
 
 const blog = defineCollection({
-  type: 'content',
+  loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -212,19 +222,38 @@ export const collections = { blog }
 npx @astrojs/upgrade
 ```
 
-**v4 → v5 Key Changes:**
+**v5 → v6 Key Changes:**
 
-- Content collections now use "Content Layer" API
-- `astro:content` imports updated
-- Some deprecated features removed
+- Node 22.12.0+ is required
+- Legacy content collections support is removed
+- `src/content/config.ts` moves to `src/content.config.ts`
+- Each collection now needs a `loader`
+- `z` should come from `astro/zod`
+- `entry.id` replaces legacy `slug` usage in collection routing
+- `entry.render()` becomes `render(entry)`
+- `Astro.glob()` is removed in favor of `import.meta.glob()` or `getCollection()`
+- `<ViewTransitions />` is removed; use `<ClientRouter />`
+- `Astro.site` inside `getStaticPaths()` should become `import.meta.env.SITE`
 
-Check migration guide: [docs.astro.build/guides/upgrade-to/v5](https://docs.astro.build/en/guides/upgrade-to/v5/)
+**Astro 6 upgrade checklist:**
+
+1. Upgrade Astro and official integrations/adapters together
+2. Verify Node 22.12.0+ locally and in CI/deployment
+3. Move `src/content/config.ts` to `src/content.config.ts`
+4. Add a `loader` to every collection
+5. Replace `import { defineCollection, z } from 'astro:content'` with `import { defineCollection } from 'astro:content'` and `import { z } from 'astro/zod'`
+6. Replace `post.slug` with `post.id`
+7. Replace `post.render()` with `render(post)`
+8. Replace `Astro.glob()` with `import.meta.glob()` or `getCollection()`
+9. Replace `<ViewTransitions />` with `<ClientRouter />`
+
+Check migration guide: [docs.astro.build/guides/upgrade-to/v6](https://docs.astro.build/en/guides/upgrade-to/v6/)
 
 ### 5. Common Migration Tasks
 
 #### Move static assets
 
-```
+```text
 public/images/ → public/images/  (same)
 src/assets/   → src/assets/      (processed by Vite)
 ```
@@ -249,7 +278,7 @@ import heroImage from '../assets/hero.jpg'
 
 #### Environment variables
 
-```
+```text
 // Next.js
 NEXT_PUBLIC_API_URL
 
@@ -258,9 +287,25 @@ PUBLIC_API_URL  // Client-side
 API_SECRET      // Server-side only
 ```
 
+#### Replace Astro.glob()
+
+```astro
+---
+// Before
+const posts = await Astro.glob('./posts/*.md')
+
+// After
+const posts = Object.values(import.meta.glob('./posts/*.md', { eager: true }))
+---
+```
+
+For content collections, prefer `getCollection()` instead of raw globs.
+
 ### 6. Verification Checklist
 
+- [ ] Local and deployment environments meet the required Node version
 - [ ] All routes render correctly
+- [ ] Content collections build without warnings
 - [ ] Images load and are optimized
 - [ ] Interactive components hydrate
 - [ ] SEO meta tags present
@@ -272,6 +317,7 @@ API_SECRET      // Server-side only
 ## Resources
 
 - [Official Migration Guides](https://docs.astro.build/en/guides/migrate-to-astro/)
+- [Upgrade to Astro v6](https://docs.astro.build/en/guides/upgrade-to/v6/)
 - [From Next.js](https://docs.astro.build/en/guides/migrate-to-astro/from-nextjs/)
 - [From Nuxt](https://docs.astro.build/en/guides/migrate-to-astro/from-nuxt/)
 - [From Gatsby](https://docs.astro.build/en/guides/migrate-to-astro/from-gatsby/)

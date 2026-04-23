@@ -37,9 +37,10 @@ description: Search and retrieve Astro documentation using the Astro Docs MCP. U
 ## Search Tips
 
 - Use specific terms: "content collections schema" vs just "collections"
-- Include version-specific terms if relevant: "Astro 5 content layer"
+- Include version-specific terms if relevant: "Astro 6 content layer" or "upgrade to v6"
 - Search for error messages directly when debugging
 - Look for integration names: "astro tailwind integration"
+- For major upgrades, search the upgrade guide before relying on feature pages alone
 
 ## Example Queries
 
@@ -49,6 +50,7 @@ description: Search and retrieve Astro documentation using the Astro Docs MCP. U
 | "What are content collections?" | `content collections` |
 | "How do I deploy to Vercel?" | `vercel adapter deployment` |
 | "View transitions not working" | `view transitions troubleshooting` |
+| "How do I migrate content collections to Astro 6?" | `upgrade to v6 content collections` |
 
 ## Response Format
 
